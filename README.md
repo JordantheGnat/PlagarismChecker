@@ -15,7 +15,7 @@ Additions from Luke:
 
 Potentially useful for collecting academic texts for plagiarism: https://aclanthology.org/ (The ACL Anthology currently hosts 80612 papers on the study of computational linguistics and natural language processing)
 
-Computer Science Assignment Text Dataset (located in folder "textData"): 
+Computer Science Assignment Text Dataset (located in zip file named "textData"): 
 Original paper pdf (pages 5 through 9 discuss how dataset was created): https://citeseerx.ist.psu.edu/document?repid=rep1&type=pdf&doi=3f79f4ae839317858d578a11c7454d04253a13ea
 
 -------------------------------------------------------------------------------------------
