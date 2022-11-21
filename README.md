@@ -13,3 +13,6 @@ https://ieee-dataport.org/open-access/programming-homework-dataset-plagiarism-de
 
 Citations:
 Vedran Ljubovic, May 8, 2020, "Programming Homework Dataset for Plagiarism Detection", IEEE Dataport, doi: https://dx.doi.org/10.21227/71fw-ss32. 
+
+
+https://huggingface.co/datasets/jpwahle/machine-paraphrase-dataset
