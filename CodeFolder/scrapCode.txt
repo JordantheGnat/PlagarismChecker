@@ -72,3 +72,12 @@ tempList.clear()
                 j=j+1
 
 print(guilty)        #C:\Users\jorda\PycharmProjects\PlagarismChecker\student9097.cpp
+
+
+                    if ("stu" in i)==True:
+                        tempList.append(i)
+                    if ("A" in i) or ("B" in i)== True :
+                        key = i
+                        tempArray = np.array(tempList)
+                        guiltyFileDict[key]=tempList
+                        tempList.clear()
