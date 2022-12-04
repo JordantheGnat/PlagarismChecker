@@ -1,0 +1,74 @@
+my_cols = [str(i) for i in range(12)]  # creates 12 columns, the longest amount in the file
+            guilty = pd.read_csv(path,
+                                               sep="\t|,",
+                                               names=my_cols,
+                                               header=None,
+                                               engine="python")
+            #guilty.fillna("deleteThis")
+            i = 0
+            while i <10:
+                j = i+1
+               # guilty2 = guilty[str(i)].astype(str)+ guilty [str(j)].astype(str)
+                #guilty2.dropna() #this part was an attempt at concating all the columns into one big one
+
+                i = i+1
+
+
+
+
+def main():
+    for root, subfolders, filenames in os.walk("src"): #walks through the files, grabbing all I need
+        for file in filenames:
+            path = os.path.join(root, file)
+            if file == "ground-truth-anon.txt":
+                file =  open(path,'r')
+                input = file.read()
+                input = input.replace(',', '\n')
+                fileAsList = input.split()
+                for i in fileAsList:
+                    if "A" in i:
+                        classList.append(i)
+                        fileAsList.remove(i)
+                print(classList)#list of classes
+                for i in fileAsList:
+                    if "-" in i:
+                        fileAsList.remove(i)
+
+                #print(fileAsList) #List of students
+    # Break between grabbing guilty students and grabbing their files
+    allStudents = []
+    guiltyFilesListCPP = []
+    guiltyFilesListC = []
+    listOLists = []
+    print(guiltyFilesList)
+    for root, subfolders, filenames in os.walk("src"): #walks through the files, grabbing all I need
+        for file in filenames:
+            path = os.path.join(root, file)
+            size = len(file)
+            if file.endswith(".c"):
+                potentialStudent = file[:size - 2]
+                if potentialStudent in fileAsList:
+                    guiltyFilesListC.append(path)
+                if potential student not in
+            if file.endswith(".cpp"):
+                potentialStudent = file[:size - 4]
+                if potentialStudent in fileAsList:
+                    guiltyFilesListCPP.append(path)
+    i =1000
+    while i < 10000:
+
+        i=i+1
+
+
+tempList.clear()
+            if key in path:
+                tempDict [str(key)]=path #This doesn't work yet, may not get it working in time, once list is cleared it
+                #clears it from the dict too
+            else:
+                if j==3:
+                    j=1
+                    i=i+1
+                dict [str(key)]=tempDict
+                j=j+1
+
+print(guilty)        #C:\Users\jorda\PycharmProjects\PlagarismChecker\student9097.cpp
