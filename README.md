@@ -4,7 +4,11 @@ with capabilities for both CPP and C code
 
 The dataset we used is from https://ieee-dataport.org/open-access/programming-homework-dataset-plagiarism-detection
 
-To get the code running, you will have to download the databse from this site, as it was much too large for github to process, and put it in an order where the main program and the src folder are on the same level, otherwise my processing won't work. My setup is ![image](https://user-images.githubusercontent.com/71861100/205502585-37e20fa0-d056-4622-8f90-1b297d8413a5.png)
+To get the code running, you will have to download the databse from this site, as it was much too large for github to process, and put it in an order where the main program and the src folder are on the same level, otherwise my processing won't work. My setup is:
+![image](https://user-images.githubusercontent.com/71861100/205502585-37e20fa0-d056-4622-8f90-1b297d8413a5.png)
+
+
+Some notes about the organization of this GitHub. Most of the stuff we had in this isn't in the final project, and can be found in the folders codeFolder and FolderOMisc. The main, functioning/mostly functioning code will be in mainCodeFolder.
 
 
 Some sources I found for plagarism checking datasets/tutorials
