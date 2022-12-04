@@ -1,6 +1,11 @@
 # PlagarismChecker
 This is a plagarism checker for CSC-3400-01: Artificial Intelligence at Belmont University. We will be creating a plagarism checker 
-with capabilities for both written regular text, and code in at least one language.
+with capabilities for both CPP and C code
+
+The dataset we used is from https://ieee-dataport.org/open-access/programming-homework-dataset-plagiarism-detection
+
+To get the code running, you will have to download the databse from this site, as it was much too large for github to process, and put it in an order where the main program and the src folder are on the same level, otherwise my processing won't work. My setup is ![image](https://user-images.githubusercontent.com/71861100/205502585-37e20fa0-d056-4622-8f90-1b297d8413a5.png)
+
 
 Some sources I found for plagarism checking datasets/tutorials
 
@@ -8,7 +13,7 @@ https://github.com/stonecoldnicole/Plagiarism_Detection
 
 https://towardsdatascience.com/build-a-plagiarism-checker-using-machine-learning-6538110ce162
 
-https://ieee-dataport.org/open-access/programming-homework-dataset-plagiarism-detection #Already downloaded the dataset, its 1.2 gigs, too big to upload
+https://ieee-dataport.org/open-access/programming-homework-dataset-plagiarism-detection 
 
 
 Additions from Luke:
