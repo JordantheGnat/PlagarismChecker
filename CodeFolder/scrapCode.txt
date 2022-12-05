@@ -81,3 +81,13 @@ print(guilty)        #C:\Users\jorda\PycharmProjects\PlagarismChecker\student909
                         tempArray = np.array(tempList)
                         guiltyFileDict[key]=tempList
                         tempList.clear()
+
+
+        for folders in files:
+            path = os.path.join(root, file)
+            if (root  == 'src\\A2016'):
+                for subsubfolders in folders:
+                    print()
+            #if (root == 'src\\A2017'):
+            #if (root == 'src\\B2016'):
+            #if (root == 'src\\B2017'):
