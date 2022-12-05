@@ -20,9 +20,11 @@ tempList = []
 listGroup = [[] for x in xrange(67)]
 #print(os.listdir("src"))
 def main():
+    assignmentList=[]
     for root, subfolders, filenames in os.walk("src"): #walks through the files, grabbing all I need
         for file in filenames:
             path = os.path.join(root, file)
+
             if file == "ground-truth-static-anon.txt":
                 file =  open(path,'r')
                 input = file.read()
@@ -36,9 +38,9 @@ def main():
                     if ("stu" in i)==True:
                             listGroup[listCount].append(i)
 
-
                 for i in guiltyList:
                     if ("A" in i) or ("B" in i)== True :
+                        assignmentList.append(i)
                         listGroup[listCount].insert(0, i)
                         listGroup[listCount].insert(0,1)
                         q =len(listGroup[listCount])
@@ -47,11 +49,10 @@ def main():
                         listCount = listCount + 1
                     if ("stu" in i)==True:
                         listGroup[listCount].append(i)
-
                 #print(classList)#list of classes
-    print(listGroup)
-    print(len(listGroup))
-    print(maxLGLen)
+    #print(listGroup)
+    #print(len(listGroup))
+    #print(maxLGLen)
     listCount = 0
     # Break between grabbing guilty students and grabbing their files
     allStudents = []
@@ -79,50 +80,14 @@ def main():
         k = k+1
 
     listCount2 = 0
-    finalDataFrame=pd.DataFrame(listGroup, columns=listOfColumns)
-    print(finalDataFrame)
-    
-    guiltyFilesListCPP, guiltyFilesListC, cleanFileListCPP, cleanFileListC = [], [],[],[]
-    for root, subfolders, filenames in os.walk("src"): #walks through the files, grabbing all I need
-        for file in filenames:
-            path = os.path.join(root, file)
-            size = len(file)
-            if file.endswith(".c"):
-                potentialGStudent = file[:size - 2]
-                if potentialGStudent in guiltyList:
-                    guiltyFilesListC.append(path)
-                if potentialGStudent in cleanStudents:
-                    cleanFileListC.append(path)
-
-            if file.endswith(".cpp"):
-                potentialGStudent = file[:size - 4]
-                if potentialGStudent in guiltyList:
-                    guiltyFilesListCPP.append(path)
-                if potentialGStudent in cleanStudents:
-                    cleanFileListCPP.append(path)
-    #print("GUILTY!")
-    #print(guiltyFilesListCPP,guiltyFilesListC)
-    #print(cleanFileListCPP,cleanFileListC)
-    #print("CLEAN!")
+    finalGuiltyDataFrame=pd.DataFrame(listGroup, columns=listOfColumns)
+    cleanDataFrame = pd.DataFrame()
+    finalGuiltyDataFrame.drop(index=finalGuiltyDataFrame.index[-2], axis=0, inplace=True)
+    finalGuiltyDataFrame.drop(index=finalGuiltyDataFrame.index[-1], axis=0, inplace=True)
+    print(assignmentList)
 
 
-    #listOAssignments = []
-    #i=1
-    #j=1
-    #y=6
 
-    #tempList = []
-    #dictIndx = 0
-    #tempDict,dict = {}, {}
-    #allCPP = guiltyFilesListCPP + cleanFileListCPP
-    #allC = guiltyFilesListC + cleanFileListC
-    #print(dict)
 
-    guiltyList =[*set(guiltyList)]
-    guiltyList.sort()
-    #print("All: ",allStudents)
-    #print("All Clean: ",cleanStudents)
-    guiltyList = [x for x in guiltyList if "-" not in x and "Z" not in x]
-    #print("All Guilty: ",guiltyList)
 main()
 print("--- %s second run time ---" % (time.time() - start_time)) #just for timing
