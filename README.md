@@ -7,6 +7,8 @@ The dataset we used is from https://ieee-dataport.org/open-access/programming-ho
 To get the code running, you will have to download the databse from this site, as it was much too large for github to process, and put it in an order where the main program and the src folder are on the same level, otherwise my processing won't work. My setup is:
 ![image](https://user-images.githubusercontent.com/71861100/205502585-37e20fa0-d056-4622-8f90-1b297d8413a5.png)
 
+Just so you know, there will be two major file groups when you download the file, using winrar. SRC and Stats. For this, we are only using the SRC folder, and the bottom txt file, the one labeled ground-truth-static-anon.txt, which you will have to put in the SRC folder. Sorr the setup is so complicated, dataset was too big to make it any simpler.
+
 
 Some notes about the organization of this GitHub. Most of the stuff we had in this isn't in the final project, and can be found in the folders codeFolder and FolderOMisc. The main, functioning/mostly functioning code will be in mainCodeFolder.
 
