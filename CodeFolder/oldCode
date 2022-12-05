@@ -1,0 +1,42 @@
+guiltyFilesListCPP, guiltyFilesListC, cleanFileListCPP, cleanFileListC = [], [],[],[]
+    for root, subfolders, filenames in os.walk("src"): #walks through the files, grabbing all I need
+        for file in filenames:
+            path = os.path.join(root, file)
+            size = len(file)
+            if file.endswith(".c"):
+                potentialGStudent = file[:size - 2]
+                if potentialGStudent in guiltyList:
+                    guiltyFilesListC.append(path)
+                if potentialGStudent in cleanStudents:
+                    cleanFileListC.append(path)
+
+            if file.endswith(".cpp"):
+                potentialGStudent = file[:size - 4]
+                if potentialGStudent in guiltyList:
+                    guiltyFilesListCPP.append(path)
+                if potentialGStudent in cleanStudents:
+                    cleanFileListCPP.append(path)
+    #print("GUILTY!")
+    #print(guiltyFilesListCPP,guiltyFilesListC)
+    #print(cleanFileListCPP,cleanFileListC)
+    #print("CLEAN!")
+
+
+    #listOAssignments = []
+    #i=1
+    #j=1
+    #y=6
+
+    #tempList = []
+    #dictIndx = 0
+    #tempDict,dict = {}, {}
+    #allCPP = guiltyFilesListCPP + cleanFileListCPP
+    #allC = guiltyFilesListC + cleanFileListC
+    #print(dict)
+
+    guiltyList =[*set(guiltyList)]
+    guiltyList.sort()
+    #print("All: ",allStudents)
+    #print("All Clean: ",cleanStudents)
+    guiltyList = [x for x in guiltyList if "-" not in x and "Z" not in x]
+    #print("All Guilty: ",guiltyList)
