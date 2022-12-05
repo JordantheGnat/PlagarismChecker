@@ -21,6 +21,7 @@ listGroup = [[] for x in xrange(67)]
 #print(os.listdir("src"))
 def main():
     assignmentList=[]
+    guiltyStudents = []
     for root, subfolders, filenames in os.walk("src"): #walks through the files, grabbing all I need
         for file in filenames:
             path = os.path.join(root, file)
@@ -31,18 +32,21 @@ def main():
                 input = input.replace(',', '\n')
                 guiltyList = input.split()
                 listCount,maxLGLen = 0,0
+                if i not in guiltyStudents and ("A" in i) == False and ("B" in i) == False:
+                    guiltyStudents.append(i)
                 for i in guiltyList:
-                    if ("A2016/Z1/Z1" in i)==True:
-                        b = "A2016/Z1/Z1"
+                    if ("A2016\Z1\Z1" in i)==True:
+                        b = "A2016\Z1\Z1"
 
                     if ("stu" in i)==True:
                             listGroup[listCount].append(i)
 
                 for i in guiltyList:
                     if ("A" in i) or ("B" in i)== True :
-                        assignmentList.append(i)
-                        listGroup[listCount].insert(0, i)
-                        listGroup[listCount].insert(0,1)
+                        tempString = i.replace("/","\\")
+                        assignmentList.append(tempString)
+
+                        listGroup[listCount].insert(0, tempString)
                         q =len(listGroup[listCount])
                         if q > maxLGLen:
                             maxLGLen = q
@@ -50,7 +54,7 @@ def main():
                     if ("stu" in i)==True:
                         listGroup[listCount].append(i)
                 #print(classList)#list of classes
-    #print(listGroup)
+    print(listGroup)
     #print(len(listGroup))
     #print(maxLGLen)
     listCount = 0
@@ -75,16 +79,19 @@ def main():
     allStudents.sort()
     k = 2
     listOfColumns = ["Guilty","Class"]
+    listOfDropColumns =["Guilty","Class"]
     while k <maxLGLen:
         listOfColumns.append(str(k-1))
         k = k+1
+
 
     listCount2 = 0
     finalGuiltyDataFrame=pd.DataFrame(listGroup, columns=listOfColumns)
     cleanDataFrame = pd.DataFrame()
     finalGuiltyDataFrame.drop(index=finalGuiltyDataFrame.index[-2], axis=0, inplace=True)
     finalGuiltyDataFrame.drop(index=finalGuiltyDataFrame.index[-1], axis=0, inplace=True)
-    print(assignmentList)
+    processingDataFrame = finalGuiltyDataFrame.drop( listOfDropColumns, axis=1)
+    print(processingDataFrame)
 
 
 
