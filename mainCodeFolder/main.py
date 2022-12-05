@@ -80,7 +80,6 @@ def main():
     while k <maxLGLen:
         listOfColumns.append(str(k-1))
         k = k+1
-    listCount2 = 0
     finalGuiltyDataFrame=pd.DataFrame(listGroup, columns=listOfColumns)
     finalGuiltyDataFrame.drop(index=finalGuiltyDataFrame.index[-2], axis=0, inplace=True)
     finalGuiltyDataFrame.drop(index=finalGuiltyDataFrame.index[-1], axis=0, inplace=True)
@@ -116,10 +115,10 @@ def main():
     guiltyDF['Guilty']=0
     guiltyDF['Assignment']=assignmentNumber
 
-    filePrint = guiltyDF.loc[13].iat[0]
-    openedFile = open(filePrint,'w')
-    print(openedFile)
-
+    filePrint = guiltyDF.loc[5].iat[0]
+    openedFile = open(filePrint, 'r')
+    j = openedFile.read()
+    print(j)
 
     print("This is just a breakpoint holder")
     #Here on out is the part with the classifiers, beware all ye who enter here
