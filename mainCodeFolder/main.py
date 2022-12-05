@@ -32,9 +32,11 @@ def main():
                 input = input.replace(',', '\n')
                 guiltyList = input.split()
                 listCount,maxLGLen = 0,0
-                if i not in guiltyStudents and ("A" in i) == False and ("B" in i) == False and ("-" in i)== False:
-                    guiltyStudents.append(i)
+
                 for i in guiltyList:
+                    if i not in guiltyStudents and ("A" in i) == False and ("B" in i) == False:
+                        if i not in guiltyStudents:
+                            guiltyStudents.append(i)
                     if ("A2016\Z1\Z1" in i)==True:
                         b = "A2016\Z1\Z1"
 
@@ -72,7 +74,7 @@ def main():
                     student = file[:size - 4]
                     if student not in allStudents:
                         allStudents.append(student) #makes a list of all students
-    cleanStudents = list(set(allStudents).difference(guiltyList))
+    cleanStudents = list(set(allStudents).difference(guiltyStudents))
     cleanStudents = [i for i in cleanStudents if i]
     cleanStudents.sort()
     allStudents = [i for i in allStudents if i]
