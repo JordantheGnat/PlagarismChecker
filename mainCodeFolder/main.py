@@ -74,13 +74,15 @@ def main():
     cleanStudents.sort()
     allStudents = [i for i in allStudents if i]
     allStudents.sort()
+    guiltyStudents = [i for i in guiltyStudents if i]
+    guiltyStudents.sort()
     k = 2
     listOfColumns = ["Guilty","Class"]
     listOfDropColumns =["Guilty","Class"]
     while k <maxLGLen:
         listOfColumns.append(str(k-1))
         k = k+1
-
+    print(guiltyStudents)
 
     listCount2 = 0
     finalGuiltyDataFrame=pd.DataFrame(listGroup, columns=listOfColumns)
