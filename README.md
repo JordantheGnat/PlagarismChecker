@@ -9,9 +9,30 @@ To get the code running, you will have to download the databse from this site, a
 
 Just so you know, there will be two major file groups when you download the file, using winrar. SRC and Stats. For this, we are only using the SRC folder, and the bottom txt file, the one labeled ground-truth-static-anon.txt, which you will have to put in the SRC folder. Sorr the setup is so complicated, dataset was too big to make it any simpler.
 
+Of if you'd like you could just use this dropbox file https://www.dropbox.com/s/ldt6qnh7l17e5a4/src.zip?dl=0, but I'm not 100% sure how it will work, as the way we all did it was by downloading the dataset then only using the src folder.
 
 Some notes about the organization of this GitHub. Most of the stuff we had in this isn't in the final project, and can be found in the folders codeFolder and FolderOMisc. The main, functioning/mostly functioning code will be in mainCodeFolder.
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Extra stuff that we used:
 
 Some sources I found for plagarism checking datasets/tutorials
 
