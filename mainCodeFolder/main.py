@@ -34,7 +34,7 @@ def main():
                 listCount,maxLGLen = 0,0
 
                 for i in guiltyList:
-                    if i not in guiltyStudents and ("A" in i) == False and ("B" in i) == False:
+                    if i not in guiltyStudents and ("A" in i) == False and ("B" in i) == False and ("-" in i)==False:
                         if i not in guiltyStudents:
                             guiltyStudents.append(i)
                     if ("A2016\Z1\Z1" in i)==True:
