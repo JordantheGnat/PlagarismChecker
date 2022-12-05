@@ -32,7 +32,7 @@ def main():
                 input = input.replace(',', '\n')
                 guiltyList = input.split()
                 listCount,maxLGLen = 0,0
-                if i not in guiltyStudents and ("A" in i) == False and ("B" in i) == False:
+                if i not in guiltyStudents and ("A" in i) == False and ("B" in i) == False and ("-" in i)== False:
                     guiltyStudents.append(i)
                 for i in guiltyList:
                     if ("A2016\Z1\Z1" in i)==True:
