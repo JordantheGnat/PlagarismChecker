@@ -106,7 +106,7 @@ def main():
             guiltyDF = pd.DataFrame({'student':guiltyTest2})
             for i in files:
                 if i not in guiltyTest:
-                    path = os.path.join(root, file)
+                    path = os.path.join(root, i)
                     #cleanTest.append(i) #appends students intead of paths
                     cleanTest.append(path) #appends paths for opening to dataframe
             cleanDataFrame = pd.DataFrame({'student':cleanTest})
