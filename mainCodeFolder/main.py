@@ -37,18 +37,13 @@ def main():
                     if i not in guiltyStudents and ("A" in i) == False and ("B" in i) == False and ("-" in i)==False:
                         if i not in guiltyStudents:
                             guiltyStudents.append(i)
-                    if ("A2016\Z1\Z1" in i)==True:
-                        b = "A2016\Z1\Z1"
-
-                    if ("stu" in i)==True:
-                            listGroup[listCount].append(i)
-
                 for i in guiltyList:
                     if ("A" in i) or ("B" in i)== True :
                         tempString = i.replace("/","\\")
                         assignmentList.append(tempString)
 
                         listGroup[listCount].insert(0, tempString)
+                        listGroup[listCount].insert(0,1)
                         q =len(listGroup[listCount])
                         if q > maxLGLen:
                             maxLGLen = q
@@ -93,7 +88,7 @@ def main():
     finalGuiltyDataFrame.drop(index=finalGuiltyDataFrame.index[-2], axis=0, inplace=True)
     finalGuiltyDataFrame.drop(index=finalGuiltyDataFrame.index[-1], axis=0, inplace=True)
     processingDataFrame = finalGuiltyDataFrame.drop( listOfDropColumns, axis=1)
-    print(processingDataFrame)
+    print(finalGuiltyDataFrame)
 
 
 
