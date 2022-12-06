@@ -39,7 +39,10 @@ for root, subfolders, filenames in os.walk("src"): #walks through the files, gra
                         guiltyStudents.append(i) #adds i to temp list
             for i in guiltyList:
                 if ("A" in i) or ("B" in i)== True :
-                    tempString = i.replace("/", '\\')
+                    if(platform.system() == 'Windows'):
+                        tempString = i.replace("/", '\\')
+                    else:
+                        tempString = i
                     assignmentList.append(tempString) #adds assignment to list of assignments Jordan
 
                     listGroup[listCount].insert(0, tempString) #inserts  the class to beginning of list of lists Jordan
@@ -92,9 +95,9 @@ assignmentNumber = ""
 # term is "Z1", "Z2", "Z3", "Z4", "Z5", or "Z6"
 # assignment is "Z1", "Z2", "Z3", "Z4", "Z5", or "Z6"
 # os_version is "mac" or "pc"
-def guilty_clean_dataframes_creation(year, term, assignment, os_version): 
+def guilty_clean_dataframes_creation(year, term, assignment):   # credit Jordan + Baxter
     separator = "\\"
-    if os_version == "mac": #Baxter
+    if(platform.system() == 'Darwin'):
         separator = "/"
     assignment_path = "src" + separator + year + separator + term + separator + assignment
 
@@ -136,70 +139,79 @@ def guilty_clean_dataframes_creation(year, term, assignment, os_version):
     training_data = pd.concat(finalDF)
     return training_data
 
-total_sample_DF = guilty_clean_dataframes_creation("A2016", "Z2", "Z3", "Mac")
-print(total_sample_DF)
+total_sample_DF = guilty_clean_dataframes_creation("B2016", "Z1", "Z3")
 
-# Extract term counts
+# Extract term counts - credit: Baxter
 count_vectorizer = CountVectorizer()
 training_term_counts = count_vectorizer.fit_transform(total_sample_DF['student'].values)
 
-# Fit and train tf-idf transformer
+# Fit and train tf-idf transformer - credit: Baxter
 tfidf = TfidfTransformer()
 X = tfidf.fit_transform(training_term_counts)
 y = total_sample_DF['Guilty']
 lb = LabelBinarizer()
 y = np.array([number[0] for number in lb.fit_transform(y)])
 
-# Compute and print each classifiers' scores
-def compute_scores(algorithm, type, beginning_time):
+# Compute and print each classifiers' scores - credit: Baxter
+def compute_scores(algorithm, label, beginning_time):
+    label = label + "\t| "
     accuracy = cross_val_score(algorithm, X, y, scoring='accuracy', cv=10).mean()
-    accuracy = round(100 * accuracy, 1)
+    accuracy = round(100 * accuracy, 2)
+    accuracy = str(accuracy) + "%\t| "
     precision = cross_val_score(algorithm, X, y, scoring='precision', cv=10).mean()
-    precision = round(100 * precision,1)
+    precision = round(100 * precision, 2)
+    precision = str(precision) + "%\t\t| "
     recall = cross_val_score(algorithm, X, y, scoring='recall', cv=10).mean()
-    recall = round(100 * recall, 1)
-    f1 = cross_val_score(algorithm, X, y, scoring='f1_weighted', cv=10).mean()
-    f1 = round(100 * f1, 1)
+    recall = round(100 * recall, 2)
+    recall = str(recall) + "%\t\t| "
+    f1 = cross_val_score(algorithm, X, y, scoring='f1', cv=10).mean()
+    f1 = round(100 * f1, 2)
+    f1 = str(f1) + "%\t| "
     roc_auc = cross_val_score(algorithm, X, y, scoring='roc_auc', cv=10).mean()
-    roc_auc = round(100 * roc_auc, 1)
+    if str(roc_auc) == 'nan':
+        roc_auc = '----\t| '
+    else:
+        roc_auc = round(100 * roc_auc, 2)
+        roc_auc = str(roc_auc) + "%\t| "
     ending_time = time.time()
     seconds = round(ending_time-beginning_time,2)
+    seconds = str(seconds) + "s"
 
-    scores = type + "\t| " + str(accuracy) + "%\t\t| " + str(precision) + "%\t\t| " + str(recall) + "%\t\t| " + str(f1) + "%\t\t| " + str(roc_auc) + "%\t\t| " + str(seconds) + "s"
+    scores = label + accuracy + precision + recall + f1 + roc_auc + seconds
 
     print(scores)
 
-# Naïve Bayes classifier
+# Naïve Bayes classifier - credit: Baxter
 def nb_classifier():
     begin = time.time()
     classifier = MultinomialNB()
     classifier.fit(X, y)
     compute_scores(classifier, "Naïve Bayes\t ", begin)
 
-# SVM classifier
+# SVM classifier - credit: Baxter
 def svm_classifier():
     begin = time.time()
     classifier = LinearSVC(random_state=0)
     classifier.fit(X, y)
     compute_scores(classifier, "SVM\t\t\t ", begin)
 
-# Random Forest classifier
+# Random Forest classifier - credit: Baxter
 def random_forest_classifier():
     begin = time.time()
     classifier = RandomForestClassifier(random_state=0)
     classifier.fit(X, y)
     compute_scores(classifier, "Random Forest", begin)
 
-# Decision Trees classifier
+# Decision Trees classifier - credit: Baxter
 def decision_tree_classifier():
     begin = time.time()
     classifier = DecisionTreeClassifier(random_state=0)
     classifier.fit(X, y)
     compute_scores(classifier, "Decision Tree", begin)
 
-# Print header column
+# Print header column - credit: Baxter
 print("Classifier\t\t| Accuracy\t| Precision\t| Recall\t| F1\t\t| AUC\t\t| Runtime")
-# Run each classifier:
+# Run each classifier: - credit: Baxter
 nb_classifier()
 svm_classifier()
 decision_tree_classifier()
