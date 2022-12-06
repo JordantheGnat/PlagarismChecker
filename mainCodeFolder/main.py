@@ -128,9 +128,9 @@ def guilty_clean_dataframes_creation(year, term, assignment, os_version):
             cleanDataFrame = pd.DataFrame({'student':cleanTest})
 
     cleanDataFrame['Guilty'] = 0
-    cleanDataFrame['Assignment']= assignmentNumber
-    guiltyDF['Guilty']=1
-    guiltyDF['Assignment']=assignmentNumber
+    cleanDataFrame['Assignment'] = assignmentNumber
+    guiltyDF['Guilty'] = 1
+    guiltyDF['Assignment'] = assignmentNumber
 
     # Merge guilty and innocent DataFrames
     finalDF = [cleanDataFrame, guiltyDF]
@@ -159,14 +159,14 @@ def compute_scores(algorithm, type, beginning_time):
     precision = round(100 * precision,1)
     recall = cross_val_score(algorithm, X, y, scoring='recall', cv=10).mean()
     recall = round(100 * recall, 1)
-    f1 = cross_val_score(algorithm, X, y, scoring='f1', cv=10).mean()
+    f1 = cross_val_score(algorithm, X, y, scoring='f1_weighted', cv=10).mean()
     f1 = round(100 * f1, 1)
     roc_auc = cross_val_score(algorithm, X, y, scoring='roc_auc', cv=10).mean()
     roc_auc = round(100 * roc_auc, 1)
     ending_time = time.time()
     seconds = round(ending_time-beginning_time,2)
 
-    scores = type + "\t| " + str(accuracy) + "%\t\t| " + "%\t\t| " + str(precision) + str(recall) + "%\t\t| " + str(f1) + "%\t\t| " + str(roc_auc) + "%\t\t| " + str(seconds) + "s"
+    scores = type + "\t| " + str(accuracy) + "%\t\t| " + str(precision) + "%\t\t| " + str(recall) + "%\t\t| " + str(f1) + "%\t\t| " + str(roc_auc) + "%\t\t| " + str(seconds) + "s"
 
     print(scores)
 
