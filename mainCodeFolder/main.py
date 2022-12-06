@@ -22,9 +22,9 @@ listGroup = [[] for x in xrange(67)]
 maxLGLen = 0
 assignmentList = []
 guiltyStudents = []
-for root, subfolders, filenames in os.walk("src"): #walks through the files, grabbing all I need
+for root, subfolders, filenames in os.walk("src"): #walks through the files, grabbing all I need, Jordan
     for file in filenames:
-        path = os.path.join(root, file)
+        path = os.path.join(root, file)   
 
         if file == "ground-truth-static-anon.txt":
             file =  open(path,'r')
@@ -35,40 +35,40 @@ for root, subfolders, filenames in os.walk("src"): #walks through the files, gra
             #above is just file reading
             for i in guiltyList:
                 if i not in guiltyStudents and ("A" in i) == False and ("B" in i) == False and ("-" in i)==False:
-                    if i not in guiltyStudents: # above checks to see if i is student or class or -
+                    if i not in guiltyStudents: # above checks to see if i is student or class or - Jordan
                         guiltyStudents.append(i) #adds i to temp list
             for i in guiltyList:
                 if ("A" in i) or ("B" in i)== True :
                     tempString = i.replace("/", '\\')
-                    assignmentList.append(tempString) #adds assignment to list of assignments
+                    assignmentList.append(tempString) #adds assignment to list of assignments Jordan
 
-                    listGroup[listCount].insert(0, tempString) #inserts  the class to beginning of list of lists
-                    listGroup[listCount].insert(0,1)    #inserts a 1 before the class
+                    listGroup[listCount].insert(0, tempString) #inserts  the class to beginning of list of lists Jordan
+                    listGroup[listCount].insert(0,1)    #inserts a 1 before the class Jordan
                     q =len(listGroup[listCount])
                     if q > maxLGLen:
-                        maxLGLen = q #gets longest list of cheaters
-                    listCount = listCount + 1 # increments the list, making it move further down a level
+                        maxLGLen = q #gets longest list of cheaters Jordan
+                    listCount = listCount + 1 # increments the list, making it move further down a level Jordan
                 if ("stu" in i)==True:
                     listGroup[listCount].append(i)
 # Break between grabbing guilty students and grabbing their files
 allStudents = []
-for root, subfolders, filenames in os.walk("src"): #walks through the files, grabbing all I need
+for root, subfolders, filenames in os.walk("src"): #walks through the files, grabbing all I need Jordan
     for file in filenames:
         path = os.path.join(root, file)
         size = len(file)
         if file.endswith(".c"):
-            student = file[:size - 2] #student is just end of file path - extension
+            student = file[:size - 2] #student is just end of file path - extension Jordan
             if student not in allStudents:
                 allStudents.append(student)
             if file.endswith(".cpp"):
                 student = file[:size - 4]
                 if student not in allStudents:
-                    allStudents.append(student) #makes a list of all students
-#All this does is sort the students into the three groups, all clean and guilty
+                    allStudents.append(student) #makes a list of all students Jordan
+#All this does is sort the students into the three groups, all clean and guilty Jordan
 cleanStudents = list(set(allStudents).difference(guiltyStudents))
 cleanStudents = [i for i in cleanStudents if i]
 cleanStudents.sort()
-allStudents = [i for i in allStudents if i] #  ALl this  above and below is sorting
+allStudents = [i for i in allStudents if i] #  ALl this  above and below is sorting Jordan
 allStudents.sort()
 guiltyStudents = [i for i in guiltyStudents if i]
 guiltyStudents.sort()
@@ -79,9 +79,9 @@ while k <maxLGLen:
     listOfColumns.append(str(k-1)) # makes a big list of columns for the dataframe to be named under
     k = k+1
 guiltyAllClassDF=pd.DataFrame(listGroup, columns=listOfColumns)
-guiltyAllClassDF.drop(index=guiltyAllClassDF.index[-2], axis=0, inplace=True) #makes dataframe for mostly viewing and understanding
+guiltyAllClassDF.drop(index=guiltyAllClassDF.index[-2], axis=0, inplace=True) #makes dataframe for mostly viewing and understanding Jordan
 guiltyAllClassDF.drop(index=guiltyAllClassDF.index[-1], axis=0, inplace=True)
-processingDataFrame = guiltyAllClassDF.drop( listOfDropColumns, axis=1) #makes dataframe for processing
+processingDataFrame = guiltyAllClassDF.drop( listOfDropColumns, axis=1) #makes dataframe for processing Jordan
 cleanDataFrame = pd.DataFrame()
 guiltyDF = pd.DataFrame()
 cleanTest = []
@@ -92,26 +92,26 @@ assignmentNumber = ""
 # term is "Z1", "Z2", "Z3", "Z4", "Z5", or "Z6"
 # assignment is "Z1", "Z2", "Z3", "Z4", "Z5", or "Z6"
 # os_version is "mac" or "pc"
-def guilty_clean_dataframes_creation(year, term, assignment, os_version):
+def guilty_clean_dataframes_creation(year, term, assignment, os_version): 
     separator = "\\"
-    if os_version == "mac":
+    if os_version == "mac": #Baxter
         separator = "/"
     assignment_path = "src" + separator + year + separator + term + separator + assignment
 
-    for root, subfolders, files in os.walk("src"): # Walks through files in src directory
+    for root, subfolders, files in os.walk("src"): # Walks through files in src directory Jordan  V
         if (assignment_path in root)==True: # Picks a class to find all the class files in.
             assignmentNumber = year + separator + term + separator + assignment #Takes values from parameter
             assignmentIndex = assignmentList.index(assignmentNumber) #accesses the assignment used based on it's assignmentNumber
             guiltyTest = processingDataFrame.loc[assignmentIndex, :].values.tolist() #Takes the guilty processing df and grabs the assingment from it
-            guiltyTest =[i for i in guiltyTest if i is not None] #clears any nones
+            guiltyTest =[i for i in guiltyTest if i is not None] #clears any nones Jordan  /\
             guiltyTestLen = len(guiltyTest)
             int = 0
             while int <= (guiltyTestLen-1):
                 tempSTR= guiltyTest[int]
                 if("A" in assignment_path)==True:
-                    tempSTR = (assignment_path + "/" + tempSTR + ".c")#All a assignments end in c
+                    tempSTR = (assignment_path + "/" + tempSTR + ".c")#All a assignments end in c Jordan
                 if("B" in assignment_path)==True:
-                    tempSTR = (assignment_path + "/" + tempSTR + ".cpp")#ALl b assignments in CPP
+                    tempSTR = (assignment_path + "/" + tempSTR + ".cpp")#ALl b assignments in CPP Jordan
                 fileTemp = open(tempSTR,'r', encoding = "utf-8")
                 openedFileTemp = fileTemp.read()
                 guiltyTest2.append(openedFileTemp)
@@ -120,16 +120,16 @@ def guilty_clean_dataframes_creation(year, term, assignment, os_version):
             for i in files:
                 if i not in guiltyTest:
                     path = os.path.join(root, i)
-                    #cleanTest.append(i) #appends students intead of paths
+                    #cleanTest.append(i) #appends students intead of paths Jordan
                     tempFile = open(path,'r', encoding = "utf-8")
                     tempRead = tempFile.read()
-                    cleanTest.append(tempRead) #appends paths for opening to dataframe
+                    cleanTest.append(tempRead) #appends paths for opening to dataframe Jordan
             cleanDataFrame = pd.DataFrame({'student':cleanTest})
 
     cleanDataFrame['Guilty'] = 0
     cleanDataFrame['Assignment'] = assignmentNumber
     guiltyDF['Guilty'] = 1
-    guiltyDF['Assignment'] = assignmentNumber
+    guiltyDF['Assignment'] = assignmentNumber   #Jordan
 
     # Merge guilty and innocent DataFrames
     finalDF = [cleanDataFrame, guiltyDF]
