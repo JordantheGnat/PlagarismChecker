@@ -13,10 +13,6 @@ from sklearn.svm import LinearSVC
 from sklearn.tree import DecisionTreeClassifier
 
 start_time = time.time()
-global guiltyFileDict
-global listGroup
-global maxLGLen
-tempList = []
 listGroup = [[] for x in xrange(67)]
 
 maxLGLen = 0
@@ -39,7 +35,7 @@ for root, subfolders, filenames in os.walk("src"): #walks through the files, gra
                         guiltyStudents.append(i) #adds i to temp list
             for i in guiltyList:
                 if ("A" in i) or ("B" in i)== True :
-                    tempString = i.replace("/", '/')
+                    tempString = i.replace("/", '\\')
                     assignmentList.append(tempString) #adds assignment to list of assignments
 
                     listGroup[listCount].insert(0, tempString) #inserts  the class to beginning of list of lists
@@ -57,7 +53,7 @@ for root, subfolders, filenames in os.walk("src"): #walks through the files, gra
         path = os.path.join(root, file)
         size = len(file)
         if file.endswith(".c"):
-            student = file[:size - 2]
+            student = file[:size - 2] #student is just end of file path - extension
             if student not in allStudents:
                 allStudents.append(student)
             if file.endswith(".cpp"):
@@ -68,7 +64,7 @@ for root, subfolders, filenames in os.walk("src"): #walks through the files, gra
 cleanStudents = list(set(allStudents).difference(guiltyStudents))
 cleanStudents = [i for i in cleanStudents if i]
 cleanStudents.sort()
-allStudents = [i for i in allStudents if i]
+allStudents = [i for i in allStudents if i] #  ALl this  above and below is sorting
 allStudents.sort()
 guiltyStudents = [i for i in guiltyStudents if i]
 guiltyStudents.sort()
@@ -76,16 +72,16 @@ k = 2
 listOfColumns = ["Guilty","Class"]
 listOfDropColumns =["Guilty","Class"]
 while k <maxLGLen:
-    listOfColumns.append(str(k-1))
+    listOfColumns.append(str(k-1)) # makes a big list of columns for the dataframe to be named under
     k = k+1
 guiltyAllClassDF=pd.DataFrame(listGroup, columns=listOfColumns)
-guiltyAllClassDF.drop(index=guiltyAllClassDF.index[-2], axis=0, inplace=True)
+guiltyAllClassDF.drop(index=guiltyAllClassDF.index[-2], axis=0, inplace=True) #makes dataframe for mostly viewing and understanding
 guiltyAllClassDF.drop(index=guiltyAllClassDF.index[-1], axis=0, inplace=True)
-processingDataFrame = guiltyAllClassDF.drop( listOfDropColumns, axis=1)
+processingDataFrame = guiltyAllClassDF.drop( listOfDropColumns, axis=1) #makes dataframe for processing
 cleanDataFrame = pd.DataFrame()
 guiltyDF = pd.DataFrame()
 cleanTest = []
-guiltyTest2 =  []
+guiltyTest2 = []
 assignmentNumber = ""
 
 # year must be in format "A2016", "B2016, "A2017", or "B2017"
@@ -100,19 +96,18 @@ def guilty_clean_dataframes_creation(year, term, assignment, os_version):
 
     for root, subfolders, files in os.walk("src"): # Walks through files in src directory
         if (assignment_path in root)==True: # Picks a class to find all the class files in.
-            assignment_path
-            assignmentNumber = year + separator + term + separator + assignment
-            classIndex = assignmentList.index(assignmentNumber)
-            guiltyTest = processingDataFrame.loc[classIndex, :].values.tolist()
-            guiltyTest =[i for i in guiltyTest if i is not None]
+            assignmentNumber = year + separator + term + separator + assignment #Takes values from parameter
+            assignmentIndex = assignmentList.index(assignmentNumber) #accesses the assignment used based on it's assignmentNumber
+            guiltyTest = processingDataFrame.loc[assignmentIndex, :].values.tolist() #Takes the guilty processing df and grabs the assingment from it
+            guiltyTest =[i for i in guiltyTest if i is not None] #clears any nones
             guiltyTestLen = len(guiltyTest)
             int = 0
             while int <= (guiltyTestLen-1):
                 tempSTR= guiltyTest[int]
                 if("A" in assignment_path)==True:
-                    tempSTR = (assignment_path + "/" + tempSTR + ".c")
+                    tempSTR = (assignment_path + "/" + tempSTR + ".c")#All a assignments end in c
                 if("B" in assignment_path)==True:
-                    tempSTR = (assignment_path + "/" + tempSTR + ".cpp")
+                    tempSTR = (assignment_path + "/" + tempSTR + ".cpp")#ALl b assignments in CPP
                 fileTemp = open(tempSTR,'r', encoding = "utf-8")
                 openedFileTemp = fileTemp.read()
                 guiltyTest2.append(openedFileTemp)
@@ -137,7 +132,7 @@ def guilty_clean_dataframes_creation(year, term, assignment, os_version):
     training_data = pd.concat(finalDF)
     return training_data
 
-total_sample_DF = guilty_clean_dataframes_creation("A2016", "Z2", "Z3", "mac")
+total_sample_DF = guilty_clean_dataframes_creation("A2016", "Z2", "Z3", "Mac")
 print(total_sample_DF)
 
 # Extract term counts
