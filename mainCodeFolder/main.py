@@ -3,6 +3,10 @@ import time
 import numpy as np
 import pandas as pd
 
+# removes warnings from output
+import warnings
+warnings.filterwarnings('ignore')
+
 from joblib.numpy_pickle_utils import xrange
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.feature_extraction.text import TfidfTransformer, CountVectorizer
