@@ -13,20 +13,7 @@ Of if you'd like you could just use this dropbox file https://www.dropbox.com/s/
 
 Some notes about the organization of this GitHub. Most of the stuff we had in this isn't in the final project, and can be found in the folders codeFolder and FolderOMisc. The main, functioning/mostly functioning code will be in mainCodeFolder.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+If you are using a mac, when you get main.py downloaded from PlagarismChecker/mainCodeFolder, and you get the src file in the right spot, then open main.py
 
 
 
