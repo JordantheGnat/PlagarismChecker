@@ -39,7 +39,7 @@ for root, subfolders, filenames in os.walk("src"): #walks through the files, gra
                         guiltyStudents.append(i) #adds i to temp list
             for i in guiltyList:
                 if ("A" in i) or ("B" in i)== True :
-                    tempString = i.replace("/", '\\')
+                    tempString = i.replace("/", '/')
                     assignmentList.append(tempString) #adds assignment to list of assignments
 
                     listGroup[listCount].insert(0, tempString) #inserts  the class to beginning of list of lists
@@ -87,35 +87,53 @@ guiltyDF = pd.DataFrame()
 cleanTest = []
 guiltyTest2 =  []
 assignmentNumber = ""
-for root, subfolders, files in os.walk("src"): #walks through the files, grabbing all I need
-    if ("src\\A2016\\Z2\\Z3" in root)==True: #picks a class to find all the class files in.
-        pth = "src\\A2016\\Z2\\Z3"
-        assignmentNumber ="A2016\\Z2\\Z3"#in an ideal world this would be iterable, but time is a construct of pain
-        classIndex = assignmentList.index(assignmentNumber)
-        guiltyTest = processingDataFrame.loc[classIndex, :].values.tolist()
-        guiltyTest =[i for i in guiltyTest if i is not None]
-        guiltyTestLen = len(guiltyTest)
-        int = 0
-        while int <= (guiltyTestLen-1):
-            tempSTR= guiltyTest[int]
-            tempSTR = (pth+"\\"+tempSTR+".c")
-            fileTemp = open(tempSTR,'r', encoding = "utf-8")
-            openedFileTemp = fileTemp.read()
-            guiltyTest2.append(openedFileTemp)
-            int = int+1
-        guiltyDF = pd.DataFrame({'student':guiltyTest2})
-        for i in files:
-            if i not in guiltyTest:
-                path = os.path.join(root, i)
-                #cleanTest.append(i) #appends students intead of paths
-                tempFile = open(path,'r', encoding = "utf-8")
-                tempRead = tempFile.read()
-                cleanTest.append(tempRead) #appends paths for opening to dataframe
-        cleanDataFrame = pd.DataFrame({'student':cleanTest})
-cleanDataFrame['Guilty'] = 0
-cleanDataFrame['Assignment']= assignmentNumber
-guiltyDF['Guilty']=1
-guiltyDF['Assignment']=assignmentNumber
+
+# year must be in format "A2016", "B2016, "A2017", or "B2017"
+# term is "Z1", "Z2", "Z3", "Z4", "Z5", or "Z6"
+# assignment is "Z1", "Z2", "Z3", "Z4", "Z5", or "Z6"
+# os_version is "mac" or "pc"
+def guilty_clean_dataframes_creation(year, term, assignment, os_version):
+    separator = "\\"
+    if os_version == "mac":
+        separator = "/"
+    assignment_path = "src" + separator + year + separator + term + separator + assignment
+
+    for root, subfolders, files in os.walk("src"): #walks through the files, grabbing all I need
+        if (assignment_path in root)==True: #picks a class to find all the class files in.
+            pth = assignment_path
+            assignmentNumber = year + separator + term + separator + assignment
+            classIndex = assignmentList.index(assignmentNumber)
+            guiltyTest = processingDataFrame.loc[classIndex, :].values.tolist()
+            guiltyTest =[i for i in guiltyTest if i is not None]
+            guiltyTestLen = len(guiltyTest)
+            int = 0
+            while int <= (guiltyTestLen-1):
+                tempSTR= guiltyTest[int]
+                tempSTR = (pth+"/"+tempSTR+".c")
+                fileTemp = open(tempSTR,'r', encoding = "utf-8")
+                openedFileTemp = fileTemp.read()
+                guiltyTest2.append(openedFileTemp)
+                int = int+1
+            guiltyDF = pd.DataFrame({'student':guiltyTest2})
+            for i in files:
+                if i not in guiltyTest:
+                    path = os.path.join(root, i)
+                    #cleanTest.append(i) #appends students intead of paths
+                    tempFile = open(path,'r', encoding = "utf-8")
+                    tempRead = tempFile.read()
+                    cleanTest.append(tempRead) #appends paths for opening to dataframe
+            cleanDataFrame = pd.DataFrame({'student':cleanTest})
+
+    cleanDataFrame['Guilty'] = 0
+    cleanDataFrame['Assignment']= assignmentNumber
+    guiltyDF['Guilty']=1
+    guiltyDF['Assignment']=assignmentNumber
+    total_frames = [cleanDataFrame, guiltyDF]
+    totalDF = pd.concat(total_frames)
+    return totalDF
+
+total_sample_DF = guilty_clean_dataframes_creation("A2016", "Z2", "Z3", "mac")
+print(total_sample_DF)
 
 print("This is just a breakpoint holder")
 #Here on out is the part with the classifiers, beware all ye who enter here
