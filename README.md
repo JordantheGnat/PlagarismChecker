@@ -17,6 +17,7 @@ If you are using a mac, when you get main.py downloaded from PlagarismChecker/ma
 
 
 
+Note: We did out best to label the main.py file between Baxter's and Jordan's code, while Luke wrote the entirety of mainText.py
 
 Extra stuff that we used:
 
