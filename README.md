@@ -18,7 +18,6 @@ If you are using a mac, when you get main.py downloaded from PlagarismChecker/ma
 
 
 
-
 Extra stuff that we used:
 
 Some sources I found for plagarism checking datasets/tutorials
