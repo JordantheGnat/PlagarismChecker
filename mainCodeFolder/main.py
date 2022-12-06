@@ -1,26 +1,26 @@
-from typing import List
-import numpy as np
-import pandas
-import pandas as pd
-from joblib.numpy_pickle_utils import xrange
-import textract
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.feature_extraction.text import TfidfTransformer, CountVectorizer, TfidfVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
-from random import *
-import time
 import os
-from pathlib import Path
+import time
+import numpy as np
+import pandas as pd
+
+from joblib.numpy_pickle_utils import xrange
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.feature_extraction.text import TfidfTransformer, CountVectorizer
+from sklearn.model_selection import cross_val_score
+from sklearn.naive_bayes import MultinomialNB
+from sklearn.preprocessing import LabelBinarizer
+from sklearn.svm import LinearSVC
+from sklearn.tree import DecisionTreeClassifier
+
 start_time = time.time()
 global guiltyFileDict
 global listGroup
 global maxLGLen
 tempList = []
 listGroup = [[] for x in xrange(67)]
-#print(os.listdir("src"))
 
 maxLGLen = 0
-assignmentList=[]
+assignmentList = []
 guiltyStudents = []
 for root, subfolders, filenames in os.walk("src"): #walks through the files, grabbing all I need
     for file in filenames:
@@ -98,9 +98,9 @@ def guilty_clean_dataframes_creation(year, term, assignment, os_version):
         separator = "/"
     assignment_path = "src" + separator + year + separator + term + separator + assignment
 
-    for root, subfolders, files in os.walk("src"): #walks through the files, grabbing all I need
-        if (assignment_path in root)==True: #picks a class to find all the class files in.
-            pth = assignment_path
+    for root, subfolders, files in os.walk("src"): # Walks through files in src directory
+        if (assignment_path in root)==True: # Picks a class to find all the class files in.
+            assignment_path
             assignmentNumber = year + separator + term + separator + assignment
             classIndex = assignmentList.index(assignmentNumber)
             guiltyTest = processingDataFrame.loc[classIndex, :].values.tolist()
@@ -109,7 +109,10 @@ def guilty_clean_dataframes_creation(year, term, assignment, os_version):
             int = 0
             while int <= (guiltyTestLen-1):
                 tempSTR= guiltyTest[int]
-                tempSTR = (pth+"/"+tempSTR+".c")
+                if("A" in assignment_path)==True:
+                    tempSTR = (assignment_path + "/" + tempSTR + ".c")
+                if("B" in assignment_path)==True:
+                    tempSTR = (assignment_path + "/" + tempSTR + ".cpp")
                 fileTemp = open(tempSTR,'r', encoding = "utf-8")
                 openedFileTemp = fileTemp.read()
                 guiltyTest2.append(openedFileTemp)
@@ -128,12 +131,80 @@ def guilty_clean_dataframes_creation(year, term, assignment, os_version):
     cleanDataFrame['Assignment']= assignmentNumber
     guiltyDF['Guilty']=1
     guiltyDF['Assignment']=assignmentNumber
-    total_frames = [cleanDataFrame, guiltyDF]
-    totalDF = pd.concat(total_frames)
-    return totalDF
+
+    # Merge guilty and innocent DataFrames
+    finalDF = [cleanDataFrame, guiltyDF]
+    training_data = pd.concat(finalDF)
+    return training_data
 
 total_sample_DF = guilty_clean_dataframes_creation("A2016", "Z2", "Z3", "mac")
 print(total_sample_DF)
+
+# Extract term counts
+count_vectorizer = CountVectorizer()
+training_term_counts = count_vectorizer.fit_transform(total_sample_DF['student'].values)
+
+# Fit and train tf-idf transformer
+tfidf = TfidfTransformer()
+X = tfidf.fit_transform(training_term_counts)
+y = total_sample_DF['Guilty']
+lb = LabelBinarizer()
+y = np.array([number[0] for number in lb.fit_transform(y)])
+
+# Compute and print each classifiers' scores
+def compute_scores(algorithm, type, beginning_time):
+    accuracy = cross_val_score(algorithm, X, y, scoring='accuracy', cv=10).mean()
+    accuracy = round(100 * accuracy, 1)
+    precision = cross_val_score(algorithm, X, y, scoring='precision', cv=10).mean()
+    precision = round(100 * precision,1)
+    recall = cross_val_score(algorithm, X, y, scoring='recall', cv=10).mean()
+    recall = round(100 * recall, 1)
+    f1 = cross_val_score(algorithm, X, y, scoring='f1', cv=10).mean()
+    f1 = round(100 * f1, 1)
+    roc_auc = cross_val_score(algorithm, X, y, scoring='roc_auc', cv=10).mean()
+    roc_auc = round(100 * roc_auc, 1)
+    ending_time = time.time()
+    seconds = round(ending_time-beginning_time,2)
+
+    scores = type + "\t| " + str(accuracy) + "%\t\t| " + "%\t\t| " + str(precision) + str(recall) + "%\t\t| " + str(f1) + "%\t\t| " + str(roc_auc) + "%\t\t| " + str(seconds) + "s"
+
+    print(scores)
+
+# Naïve Bayes classifier
+def nb_classifier():
+    begin = time.time()
+    classifier = MultinomialNB()
+    classifier.fit(X, y)
+    compute_scores(classifier, "Naïve Bayes\t ", begin)
+
+# SVM classifier
+def svm_classifier():
+    begin = time.time()
+    classifier = LinearSVC(random_state=0)
+    classifier.fit(X, y)
+    compute_scores(classifier, "SVM\t\t\t ", begin)
+
+# Random Forest classifier
+def random_forest_classifier():
+    begin = time.time()
+    classifier = RandomForestClassifier(random_state=0)
+    classifier.fit(X, y)
+    compute_scores(classifier, "Random Forest", begin)
+
+# Decision Trees classifier
+def decision_tree_classifier():
+    begin = time.time()
+    classifier = DecisionTreeClassifier(random_state=0)
+    classifier.fit(X, y)
+    compute_scores(classifier, "Decision Tree", begin)
+
+# Print header column
+print("Classifier\t\t| Accuracy\t| Precision\t| Recall\t| F1\t\t| AUC\t\t| Runtime")
+# Run each classifier:
+nb_classifier()
+svm_classifier()
+decision_tree_classifier()
+random_forest_classifier()
 
 print("This is just a breakpoint holder")
 #Here on out is the part with the classifiers, beware all ye who enter here
