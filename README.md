@@ -32,18 +32,18 @@ https://ieee-dataport.org/open-access/programming-homework-dataset-plagiarism-de
 
 Additions from Luke:
 
-Potentially useful for collecting academic texts for plagiarism: https://aclanthology.org/ (The ACL Anthology currently hosts 80612 papers on the study of computational linguistics and natural language processing)
+The text duplication detection algorithm is a separate program which can be downloaded from the file name "textPlagiarismChecker.zip" located above
+The only folder which is sourced from in this project is 'src1', which contains .txt files to execute the program. The PDF and .DOCX files are included in the "textData.zip" folder.
+
+Some notes about usage of the program:
+The teacher password is "teacher1120" with no quotations when entering into the program.
+
 
 Computer Science Assignment Text Dataset (located in zip file named "textData"): 
 Original paper pdf (pages 5 through 9 discuss how dataset was created): https://citeseerx.ist.psu.edu/document?repid=rep1&type=pdf&doi=3f79f4ae839317858d578a11c7454d04253a13ea
 
 -------------------------------------------------------------------------------------------
 
-Citations:
-Vedran Ljubovic, May 8, 2020, "Programming Homework Dataset for Plagiarism Detection", IEEE Dataport, doi: https://dx.doi.org/10.21227/71fw-ss32. 
-
-
-https://huggingface.co/datasets/jpwahle/machine-paraphrase-dataset
 
 
 
