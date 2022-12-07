@@ -34,7 +34,7 @@ s = ''
 # pdfDF = pd.DataFrame()
 # docxDF = pd.DataFrame()
 
-userType = input('Enter user type (t for teacher, s for student: \n')
+userType = input('Enter user type (t for teacher, s for student): \n')
 if(userType == 't'):
     teacherPassword = input('Enter teacher password: \n')
     for i in range(10):
@@ -105,8 +105,8 @@ pdfWriter = PyPDF2.PdfFileWriter()
 for root, dirs, files in os.walk(source):
     for file in files:
         docxName = file.split('_')[1]
-        if docxName == docx
-            docx =
+        if docxName == docx:
+            docx = 'txt'
         if(userType == 't'):
              listIndex = listIndex + 1
              studentName = file.split('_')[0]
