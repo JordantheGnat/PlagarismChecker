@@ -33,11 +33,12 @@ https://ieee-dataport.org/open-access/programming-homework-dataset-plagiarism-de
 Additions from Luke:
 
 The text duplication detection algorithm is a separate program which can be downloaded from the file name "textPlagiarismChecker.zip" located above
-The only folder which is sourced from in this project is 'src1', which contains .txt files to execute the program. The PDF and .DOCX files are included in the "textData.zip" folder.
+The only folder which is sourced from in this project is 'src1', which contains .txt files to execute the program. The PDF and .DOCX files are included in the "textData.zip" folder in the "textPlagiarismChecker" folder.
 
 Some notes about usage of the program:
 The teacher password is "teacher1120" with no quotations when entering into the program.
 
+Link to zip file containing the program: https://drive.google.com/file/d/1yv7GVKxhPQxk7Ub7_cJZx5HrRVJlORT-/view?usp=sharing
 
 Computer Science Assignment Text Dataset (located in zip file named "textData"): 
 Original paper pdf (pages 5 through 9 discuss how dataset was created): https://citeseerx.ist.psu.edu/document?repid=rep1&type=pdf&doi=3f79f4ae839317858d578a11c7454d04253a13ea
