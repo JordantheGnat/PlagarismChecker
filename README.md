@@ -19,16 +19,6 @@ If you are using a mac, when you get main.py downloaded from PlagarismChecker/ma
 
 Note: We did out best to label the main.py file between Baxter's and Jordan's code, while Luke wrote the entirety of mainText.py
 
-Extra stuff that we used:
-
-Some sources I found for plagarism checking datasets/tutorials
-
-https://github.com/stonecoldnicole/Plagiarism_Detection
-
-https://towardsdatascience.com/build-a-plagiarism-checker-using-machine-learning-6538110ce162
-
-https://ieee-dataport.org/open-access/programming-homework-dataset-plagiarism-detection 
-
 
 Additions from Luke:
 
