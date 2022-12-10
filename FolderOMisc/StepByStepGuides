@@ -1,8 +1,0 @@
-This is a file with articles, video, or source code on different ways to implement a plagiarism checker:
-
-# This uses the Average Word Embeddings Model
-https://towardsdatascience.com/build-a-plagiarism-checker-using-machine-learning-6538110ce162
-
-# This uses a Cosine Similarity model
-https://kalebujordan.dev/how-to-detect-plagiarism-in-text-using-python/   # Written instructions
-https://www.youtube.com/watch?v=tBqYSzy80xY   # Video walkthrough
